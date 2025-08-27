@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NubankHomeApp</string>
+    <string name="search_bar_hint">Tip here your URL</string>
+    <string name="search_bar_sample">https://international.nubank.com.br/about/</string>
+    <string name="last_alias_header_text">Last URL Shortened</string>
+    <string name="list_header_text">Recently shortened URLs</string>
+    <string name="shorten_url_menu_title">Shorten Url</string>
+    <string name="search_button_description">Search action</string>
+
+    <!--  Dialogs  -->
+    <string name="invalid_url_dialog_title">Invalid URL</string>
+    <string name="invalid_url_dialog_message">Please, type a valid Link!</string>
+
+    <string name="generic_error_dialog_title">Error</string>
+    <string name="generic_error_dialog_message">Not able to create a alias!\nTry again in some instants.</string>
+
+    <string name="alias_already_created_dialog_message">This alias has already been created!</string>
+
+    <string name="dialog_button">OK</string>
+</resources>
