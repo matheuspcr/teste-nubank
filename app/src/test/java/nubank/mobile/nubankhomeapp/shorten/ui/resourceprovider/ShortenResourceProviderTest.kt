@@ -64,15 +64,14 @@ internal class ShortenResourceProviderTest {
     @Test
     fun `getAliasAlreadyCreatedDialogModel should return correct DialogUIModel with formatted message`() {
         // GIVEN
-        val position = 3
         val expectedMessage = "Este link já foi encurtado e está na posição 3 da sua lista."
         val expectedButtonText = "Entendi"
 
-        every { resourceProvider.getString(R.string.alias_already_created_dialog_message, position) } returns expectedMessage
+        every { resourceProvider.getString(R.string.alias_already_created_dialog_message) } returns expectedMessage
         every { resourceProvider.getString(R.string.dialog_button) } returns expectedButtonText
 
         // WHEN
-        val result = shortenResourceProvider.getAliasAlreadyCreatedDialogModel(position)
+        val result = shortenResourceProvider.getAliasAlreadyCreatedDialogModel()
 
         // THEN
         assertThat(result).isInstanceOf(DialogUIModel::class.java)

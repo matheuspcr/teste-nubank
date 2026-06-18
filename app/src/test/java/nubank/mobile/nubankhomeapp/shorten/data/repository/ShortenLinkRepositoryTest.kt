@@ -12,6 +12,7 @@ import nubank.mobile.nubankhomeapp.shorten.ALIAS_STUB
 import nubank.mobile.nubankhomeapp.shorten.ORIGINAL_URL_STUB
 import nubank.mobile.nubankhomeapp.shorten.SHORTEN_URL_STUB
 import nubank.mobile.nubankhomeapp.shorten.data.converter.AliasModelConverter
+import nubank.mobile.nubankhomeapp.shorten.data.datasource.ShortenLinkDataSourceI 
 import nubank.mobile.nubankhomeapp.shorten.data.model.AliasLinksResponse
 import nubank.mobile.nubankhomeapp.shorten.data.model.ShortenUrlRequest
 import nubank.mobile.nubankhomeapp.shorten.data.model.ShortenUrlResponse
@@ -28,13 +29,14 @@ import retrofit2.Response
 internal class ShortenLinkRepositoryTest {
     private val service: AliasApiService = mockk(relaxed = true)
     private val converter: AliasModelConverter = mockk(relaxed = true)
+    private val dataSource: ShortenLinkDataSourceI = mockk(relaxed = true)
 
     private lateinit var repository: ShortenLinkRepository
 
     @Before
     fun setup() {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        repository = ShortenLinkRepositoryImpl(service, converter)
+        repository = ShortenLinkRepositoryImpl(service, converter, dataSource)
     }
 
     @After
