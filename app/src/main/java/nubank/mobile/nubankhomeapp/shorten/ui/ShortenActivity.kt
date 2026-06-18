@@ -22,6 +22,7 @@ class ShortenActivity : AppCompatActivity(), DialogInterface.OnClickListener {
     private val viewModel by viewModel<ShortenViewModel>()
     private val binding by lazy { ActivityShortenBinding.inflate(layoutInflater) }
 
+    // Esse comentário serve para disparar o workflow do github actions que executa os testes unitários do projeto.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
