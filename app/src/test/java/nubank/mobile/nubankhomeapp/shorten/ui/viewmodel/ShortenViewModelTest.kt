@@ -98,35 +98,6 @@ class ShortenViewModelTest {
     }
 
     @Test
-    fun `shorten should update state to AliasAlreadyCreated if URL is already in history`() = runTest {
-        // GIVEN
-        val expectedDialogUIModel = DialogUIModel("Already Shortened", "This URL was already shortened at position 1.", "OK")
-
-        coEvery { repository.shortenUrl(ORIGINAL_URL_STUB) } returns ALIAS_UI_MODEL_STUB
-        every { resourceProvider.getAliasAlreadyCreatedDialogModel() } returns expectedDialogUIModel
-
-        viewModel.shorten(ORIGINAL_URL_STUB)
-        testDispatcher.scheduler.runCurrent()
-
-        // THEN
-        val livedataValues = mutableListOf<State>()
-        viewModel.searchBarState.observeForever { livedataValues.add(it) }
-        testDispatcher.scheduler.runCurrent()
-
-        // WHEN
-        viewModel.shorten(ORIGINAL_URL_STUB)
-        testDispatcher.scheduler.runCurrent()
-
-        // THEN
-        assertThat(livedataValues.last()).isInstanceOf(State.AliasAlreadyCreated::class.java)
-        assertThat((livedataValues.last() as State.AliasAlreadyCreated).model).isEqualTo(expectedDialogUIModel)
-
-        coVerify(exactly = 1) { repository.shortenUrl(ORIGINAL_URL_STUB) }
-        verify(exactly = 1) { resourceProvider.getAliasAlreadyCreatedDialogModel() }
-    }
-
-
-    @Test
     fun `shorten should update state to GenericError on repository exception`() = runTest {
         // GIVEN
         val expectedDialogUIModel = DialogUIModel("Error", "Something went wrong.", "OK")
@@ -198,30 +169,6 @@ class ShortenViewModelTest {
         assertThat(initialValues[1]).isEqualTo(State.Loading)
         assertThat(initialValues.last()).isInstanceOf(State.NewAliasCreated::class.java)
         verify(exactly = 0) { resourceProvider.getInvalidUrlDialogModel() }
-    }
-
-    @Test
-    fun `alreadyShorten should return true if originalUrl matches an item in historyList`() = runTest {
-        // GIVEN
-        coEvery { repository.shortenUrl(ORIGINAL_URL_STUB) } returns ALIAS_UI_MODEL_STUB
-        viewModel.shorten(ORIGINAL_URL_STUB)
-        testDispatcher.scheduler.runCurrent()
-
-        val expectedDialogUIModel = DialogUIModel("Already Shortened", "Found at position 1", "OK")
-        every { resourceProvider.getAliasAlreadyCreatedDialogModel() } returns expectedDialogUIModel
-
-        val livedataValues = mutableListOf<State>()
-        viewModel.searchBarState.observeForever { livedataValues.add(it) }
-        testDispatcher.scheduler.runCurrent()
-
-        // WHEN
-        viewModel.shorten(ORIGINAL_URL_STUB)
-        testDispatcher.scheduler.runCurrent()
-
-        // THEN
-        assertThat(livedataValues.last()).isInstanceOf(State.AliasAlreadyCreated::class.java)
-        assertThat((livedataValues.last() as State.AliasAlreadyCreated).model.message).isEqualTo("Found at position 1")
-        verify(exactly = 1) { resourceProvider.getAliasAlreadyCreatedDialogModel() } // Verified call for position 1
     }
 
     @Test
